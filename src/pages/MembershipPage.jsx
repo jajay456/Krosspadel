@@ -54,7 +54,7 @@ export default function MembershipPage({ navigate, notify, openBook }) {
       {/* HERO */}
       <section id="hero" style={{ padding: 0 }}>
           <div className="hero-video-wrap" style={{
-          backgroundImage: " linear-gradient(rgba(0, 0, 0, 0.1),rgba(0, 0, 0, 0.)),url('https://res.cloudinary.com/vtjrp9sy/image/upload/v1783336186/DSC09854_e17j2p.jpg')",
+          backgroundImage: " linear-gradient(rgba(0, 0, 0, 0.1),rgba(0, 0, 0, 0.1)),url('https://res.cloudinary.com/vtjrp9sy/image/upload/v1783336186/DSC09854_e17j2p.jpg')",
           backgroundSize: "cover",
           backgroundPosition: "center",
           maskImage: "linear-gradient(to bottom, black 80%, transparent 100%)",
