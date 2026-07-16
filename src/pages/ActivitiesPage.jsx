@@ -35,11 +35,13 @@ export default function ActivitiesPage({ navigate, openBook }) {
       {/* HERO SECTION */}
       <section id="hero" style={{ padding: 0 }}>
         <div className="hero-video-wrap" style={{
-          backgroundImage: " linear-gradient(rgba(0, 0, 0, 0.5),rgba(0, 0, 0, 0.5)),url('/image/backgrounds/DSC03067.jpg')",
+          backgroundImage: " linear-gradient(rgba(0, 0, 0, 0.1),rgba(0, 0, 0, 0.4)),url('/image/backgrounds/DSC03067.jpg')",
           backgroundSize: "cover",
           backgroundPosition: "center",
           maskImage: "linear-gradient(to bottom, black 80%, transparent 100%)",
           WebkitMaskImage: "linear-gradient(to bottom, black 80%, transparent 100%)",
+          filter: "brightness(1.4)", 
+          WebkitFilter: "brightness(1.4)",
           }} />
         <div className="hero-content">
           <div className="hero-eyebrow">What We Offer</div>
