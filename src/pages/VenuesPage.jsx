@@ -10,7 +10,7 @@ export default function VenuesPage({ navigate, openBook }) {
       <section id="hero" style={{ padding: 0 }}>
         <div className="hero-video-wrap" 
         style={{
-          backgroundImage: " linear-gradient(rgba(0, 0, 0, 0.5),rgba(0, 0, 0, 0.5)),url('/image/backgrounds/Venue.png')",
+          backgroundImage: " linear-gradient(rgba(0, 0, 0, 0.2),rgba(0, 0, 0, 0.4)),url('/image/backgrounds/Venue.png')",
           backgroundSize: "cover",
           backgroundPosition: "center",
           maskImage: "linear-gradient(to bottom, black 80%, transparent 100%)",
