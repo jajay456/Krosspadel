@@ -62,11 +62,13 @@ export default function LifestylePage({ navigate }) {
       {/* HERO */}
       <section id="hero" style={{ padding: 0 }}>
         <div className="hero-video-wrap" style={{
-          backgroundImage: " linear-gradient(rgba(0, 0, 0, 0.7),rgba(0, 0, 0, 0.7)),url('/image/backgrounds/DSC02039.jpg')",
+          backgroundImage: " linear-gradient(rgba(0, 0, 0, 0.1),rgba(0, 0, 0, 0.4)),url('/image/backgrounds/DSC02039.jpg')",
           backgroundSize: "cover",
           backgroundPosition: "center",
           maskImage: "linear-gradient(to bottom, black 80%, transparent 100%)",
           WebkitMaskImage: "linear-gradient(to bottom, black 80%, transparent 100%)",
+          filter: "brightness(1.4)", 
+          WebkitFilter: "brightness(1.4)",
         }} />
         <div className="hero-content">
           <div className="hero-eyebrow">The KROSS Universe</div>

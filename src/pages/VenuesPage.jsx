@@ -15,8 +15,8 @@ export default function VenuesPage({ navigate, openBook }) {
           backgroundPosition: "center",
           maskImage: "linear-gradient(to bottom, black 80%, transparent 100%)",
           WebkitMaskImage: "linear-gradient(to bottom, black 80%, transparent 100%)",
-          filter: "brightness(1.5)", 
-          WebkitFilter: "brightness(1.5)",
+          filter: "brightness(1.4)", 
+          WebkitFilter: "brightness(1.4)",
         }} 
         />
         <div className="hero-content">
