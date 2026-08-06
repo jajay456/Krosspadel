@@ -9,7 +9,7 @@ const LEFT_LINKS = [
 ];
 
 const RIGHT_LINKS = [
-  { p: "krosspark", label: "Kross Park" },
+  { p: "krosspark", label: "Kross Park", href: "https://krosspark.club/" },
   { p: "partner", label: "Become a Partner" },
   { p: "membership", label: "Book & Pricing" },
   { p: "contact", label: "Contact" },
@@ -85,7 +85,9 @@ export default function Nav({ navigate, scrolled, page }) {
         </div>
         <img ref={logoRef} className="nav-logo-img" src="/image/kross_logo.png" alt="KROSS" onClick={() => go("home")} />
         <div className="nav-right">
-          {RIGHT_LINKS.map(l => <a key={l.p} className="desktop-only" onClick={() => go(l.p)}>{l.label}</a>)}
+          {RIGHT_LINKS.map(l => l.href
+            ? <a key={l.p} className="desktop-only" href={l.href} target="_blank" rel="noopener noreferrer">{l.label}</a>
+            : <a key={l.p} className="desktop-only" onClick={() => go(l.p)}>{l.label}</a>)}
           <button className={`hamburger${menuOpen ? " open" : ""}`} onClick={() => setMenuOpen(o => !o)} aria-label="Menu">
             <span /><span /><span />
           </button>
@@ -103,7 +105,9 @@ export default function Nav({ navigate, scrolled, page }) {
       </nav>
       <div className={`mobile-menu${menuOpen ? " open" : ""}`}>
         {LEFT_LINKS.map(l => <a key={l.p} onClick={() => go(l.p)}>{l.label}</a>)}
-        {RIGHT_LINKS.map(l => <a key={l.p} onClick={() => go(l.p)}>{l.label}</a>)}
+        {RIGHT_LINKS.map(l => l.href
+          ? <a key={l.p} href={l.href} target="_blank" rel="noopener noreferrer">{l.label}</a>
+          : <a key={l.p} onClick={() => go(l.p)}>{l.label}</a>)}
       </div>
     </>
   );
