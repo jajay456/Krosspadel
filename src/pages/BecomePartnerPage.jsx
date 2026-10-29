@@ -1,4 +1,5 @@
 import Footer from "../components/Footer";
+import { cldImg } from "../utils/cldImg";
 
 const BRAND_PARTNERS = [
   { name: "Corona",         category: "Beverage",    image:  "/image/logos/1.png" },
@@ -93,7 +94,7 @@ export default function BecomePartnerPage({ navigate }) {
                 >
                   {b.image ? (
                     <img
-                      src={b.image}
+                      src={cldImg(b.image, 400)}
                       alt={b.name}
                       style={{
                       maxWidth: "clamp(120px, 12vw, 180px)",

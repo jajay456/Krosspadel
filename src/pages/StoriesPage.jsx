@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { db } from "../firebase";
 import { collection, getDocs } from "firebase/firestore";
 import Footer from "../components/Footer";
+import { cldImg } from "../utils/cldImg";
 
 function StoryBg({ story }) {
   return (
@@ -9,7 +10,7 @@ function StoryBg({ story }) {
       className="story-gallery-bg"
       style={{
         background: story.imageUrl
-          ? `url(${story.imageUrl}) center/cover no-repeat`
+          ? `url(${cldImg(story.imageUrl, 800)}) center/cover no-repeat`
           : (story.bg || "var(--mid2)")
       }}
     />

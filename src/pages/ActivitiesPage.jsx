@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { db } from "../firebase";
 import { collection, getDocs } from "firebase/firestore";
 import Footer from "../components/Footer";
+import { cldImg } from "../utils/cldImg";
 import { formatDate } from "../utils/venueUtils";
 import { MOCKUP_ACTIVITIES } from "../data/mockActivities";
 
@@ -115,7 +116,7 @@ export default function ActivitiesPage({ navigate, openBook }) {
         >
           {a.imageUrl && (
             <img
-              src={a.imageUrl}
+              src={cldImg(a.imageUrl, 800)}
               alt={a.name}
               loading="lazy"
               draggable={false}

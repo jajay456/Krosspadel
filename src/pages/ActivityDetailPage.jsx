@@ -4,6 +4,7 @@ import { doc, getDoc } from "firebase/firestore";
 import { formatDate } from "../utils/venueUtils";
 import { MOCKUP_ACTIVITIES } from "../data/mockActivities";
 import Footer from "../components/Footer";
+import { cldImg } from "../utils/cldImg";
 
 export default function ActivityDetailPage({ navigate, activityId }) {
   const [activity, setActivity] = useState(null);
@@ -43,7 +44,7 @@ export default function ActivityDetailPage({ navigate, activityId }) {
         alignItems: "flex-end",
         marginTop: 64,
         background: activity.imageUrl
-          ? `url(${activity.imageUrl}) center/cover no-repeat`
+          ? `url(${cldImg(activity.imageUrl, 1600)}) center/cover no-repeat`
           : "linear-gradient(135deg, var(--green-dark), var(--green-mid))"
       }}>
         <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(0,0,0,.88) 0%, rgba(0,0,0,.15) 60%, transparent 100%)" }} />

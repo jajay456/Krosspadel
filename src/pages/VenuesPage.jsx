@@ -1,6 +1,7 @@
 import { useContext } from "react";
 import { VenueContext } from "../context/VenueContext";
 import Footer from "../components/Footer";
+import { cldImg } from "../utils/cldImg";
 export default function VenuesPage({ navigate, openBook }) {
   const { venues } = useContext(VenueContext);
 
@@ -63,38 +64,38 @@ export default function VenuesPage({ navigate, openBook }) {
               label: "Padel",
               col: "1/3",
               row: "1",
-              bg: "url('https://res.cloudinary.com/xqqizwkp/image/upload/v1791432493/697021673_18028397846815610_1103736976553903509_n.jpg')",
+              bg: "https://res.cloudinary.com/xqqizwkp/image/upload/v1791432493/697021673_18028397846815610_1103736976553903509_n.jpg",
               position: "center 35%",
             },
             {
               label: "Bar",
               col: "3",
               row: "1/3",
-              bg: "url('https://res.cloudinary.com/xqqizwkp/image/upload/v1791447310/DSC09512.jpg')",
+              bg: "https://res.cloudinary.com/xqqizwkp/image/upload/v1791447310/DSC09512.jpg",
             },
             {
               label: "Wellness",
               col: "4",
               row: "1",
-              bg: "url('https://res.cloudinary.com/xqqizwkp/image/upload/v1791446910/YOT_1742.jpg')",
+              bg: "https://res.cloudinary.com/xqqizwkp/image/upload/v1791446910/YOT_1742.jpg",
             },
             {
               label: "Recovery",
               col: "1",
               row: "2",
-              bg: "url('https://res.cloudinary.com/xqqizwkp/image/upload/v1791436799/DSC01755.jpg')",
+              bg: "https://res.cloudinary.com/xqqizwkp/image/upload/v1791436799/DSC01755.jpg",
             },
             {
               label: "Food",
               col: "2",
               row: "2",
-              bg: "url('https://res.cloudinary.com/xqqizwkp/image/upload/v1791447181/DSC07745.jpg')",
+              bg: "https://res.cloudinary.com/xqqizwkp/image/upload/v1791447181/DSC07745.jpg",
             },
             {
               label: "Community",
               col: "4",
               row: "2",
-              bg: "url('https://res.cloudinary.com/xqqizwkp/image/upload/v1791432498/caption_2.jpg')",
+              bg: "https://res.cloudinary.com/xqqizwkp/image/upload/v1791432498/caption_2.jpg",
             },
           ].map((cell, i) => (
             <div
@@ -103,7 +104,7 @@ export default function VenuesPage({ navigate, openBook }) {
                 gridColumn: cell.col,
                 gridRow: cell.row,
 
-                backgroundImage: cell.bg,
+                backgroundImage: `url('${cldImg(cell.bg, 1000)}')`,
                 backgroundSize: "cover",
                 backgroundPosition: cell.position ?? "center",
                 backgroundRepeat: "no-repeat",
@@ -175,7 +176,7 @@ export default function VenuesPage({ navigate, openBook }) {
               return (
                 <div className="venue-card" key={v.id} onClick={() => navigate("venue-" + v.id)}>
                   <div className="venue-bg-div" style={{
-                    background: v.bgImage ? `url(${v.bgImage}) center/cover no-repeat` : v.bg
+                    background: v.bgImage ? `url(${cldImg(v.bgImage, 800)}) center/cover no-repeat` : v.bg
                   }} />
                   <div className="venue-card-inner">
                     <div className="venue-overlay" />

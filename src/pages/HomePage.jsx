@@ -1,5 +1,6 @@
 import { useState, useEffect, useContext } from "react";
 import Footer from "../components/Footer";
+import { cldImg } from "../utils/cldImg";
 import MobileCarousel from "../components/MobileCarousel";
 import { VenueContext } from "../context/VenueContext";
 import { db } from "../firebase";
@@ -124,7 +125,7 @@ export default function HomePage({ navigate }) {
                         return (
                             <div className="venue-card" key={v.id} onClick={() => navigate("venue-" + v.id)}>
                                 <div className="venue-bg-div" style={{
-                                    background: v.bgImage ? `url(${v.bgImage}) center/cover no-repeat` : v.bg
+                                    background: v.bgImage ? `url(${cldImg(v.bgImage, 800)}) center/cover no-repeat` : v.bg
                                 }} />
                                 <div className="venue-card-inner">
                                     <div className="venue-overlay" />
@@ -175,7 +176,7 @@ export default function HomePage({ navigate }) {
                                         className="venue-bg-div"
                                         style={{
                                             background: a.imageUrl
-                                                ? `url(${a.imageUrl}) center/cover no-repeat`
+                                                ? `url(${cldImg(a.imageUrl, 800)}) center/cover no-repeat`
                                                 : "linear-gradient(135deg, var(--green-dark), var(--green-mid))",
                                         }}
                                     />
@@ -248,7 +249,7 @@ export default function HomePage({ navigate }) {
                         <div className="story-gallery-feature" onClick={() => navigate("stories")}>
                             <div className="story-gallery-bg" style={{
                                 background: stories[0].imageUrl
-                                    ? `url(${stories[0].imageUrl}) center/cover no-repeat`
+                                    ? `url(${cldImg(stories[0].imageUrl, 1200)}) center/cover no-repeat`
                                     : (stories[0].bg || "var(--mid2)")
                             }} />
                             <div className="story-gallery-overlay" />
@@ -266,7 +267,7 @@ export default function HomePage({ navigate }) {
                                 <div key={s.docId} className="story-gallery-small" onClick={() => navigate("stories")}>
                                     <div className="story-gallery-bg" style={{
                                         background: s.imageUrl
-                                            ? `url(${s.imageUrl}) center/cover no-repeat`
+                                            ? `url(${cldImg(s.imageUrl, 800)}) center/cover no-repeat`
                                             : (s.bg || "var(--mid2)")
                                     }} />
                                     <div className="story-gallery-overlay" />
