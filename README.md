@@ -1,6 +1,6 @@
 # KROSS Padel
-
-เว็บไซต์สำหรับ **KROSS Padel** แบรนด์สนามพาเดิลในไทย — เป็นทั้ง marketing site สำหรับลูกค้า และมี admin panel จัดการข้อมูลหลังบ้าน
+website
+เว็บไซต์สำหรับ **KROSS Padel** แบรนด์สนามพาเดิลในไทย — เป็นทั้ง marketing site สำหรับลูกค้า และมี admin panel จัดการข้อมูลหลังบ้าน. 
 
 > สำหรับ **ฟอร์มเก็บคอนเทนต์จากลูกค้า** (venues / activities / membership ฯลฯ) ดูที่ [`CLIENT_CONTENT_FORM.md`](./CLIENT_CONTENT_FORM.md)
 
