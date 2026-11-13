@@ -140,7 +140,7 @@ function VenuePreview({ form }) {
     );
 }
 
-export default function AdminVenuesPage({ navigate }) {
+export default function AdminVenuesPage() {
     const { refreshVenues } = useContext(VenueContext);
     const [venues, setVenues] = useState([]);
     const [editing, setEditing] = useState(null);
@@ -306,18 +306,17 @@ export default function AdminVenuesPage({ navigate }) {
     };
 
     if (!editing) return (
-        <div style={{ minHeight: "100vh", background: "var(--dark)", padding: "120px 40px 40px" }}>
-            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 40 }}>
+        <div className="adm-page">
+            <div className="adm-head">
                 <div>
-                    <button className="back-btn" onClick={() => navigate("admin")}>← Dashboard</button>
-                    <div className="heading" style={{ fontSize: 32, marginBottom: 0 }}>Venues</div>
+                    <div className="adm-title">Venues</div>
                 </div>
                 <button className="btn-primary" onClick={handleNew}>+ Add Venue</button>
             </div>
-            <div style={{ fontSize: 11, opacity: 0.35, marginBottom: 8, letterSpacing: 1 }}>
+            <div className="adm-hint">
                 ลากเพื่อเรียงลำดับ
             </div>
-            <div style={{ display: "flex", flexDirection: "column", gap: 4 }}>
+            <div className="adm-list">
                 {venues.map((v, i) => (
                     <div
                         key={v.docId}
@@ -326,10 +325,9 @@ export default function AdminVenuesPage({ navigate }) {
                         onDragOver={(e) => handleDragOver(e, i)}
                         onDrop={() => handleDrop(i)}
                         onDragEnd={() => { setDragOverIdx(null); setDragIdx(null); }}
+                        className="adm-row"
                         style={{
-                            display: "flex", justifyContent: "space-between", alignItems: "center",
-                            padding: "18px 20px", background: "var(--mid)", borderRadius: 6,
-                            border: dragOverIdx === i ? "1px solid var(--green-highlight)" : "1px solid transparent",
+                            boxShadow: dragOverIdx === i ? "inset 0 0 0 1px var(--green-highlight)" : "none",
                             opacity: dragIdx === i ? 0.45 : 1,
                             transition: "border-color 0.15s, opacity 0.15s",
                             cursor: "grab",
@@ -349,13 +347,13 @@ export default function AdminVenuesPage({ navigate }) {
                                 ))}
                             </div>
                             <div>
-                                <div style={{ fontSize: 16, fontWeight: 600 }}>{v.name}</div>
-                                <div style={{ opacity: 0.45, fontSize: 12, marginTop: 2 }}>{v.loc} · {v.status}</div>
+                                <div className="adm-row-title">{v.name}</div>
+                                <div className="adm-row-meta">{v.loc} · {v.status}</div>
                             </div>
                         </div>
-                        <div style={{ display: "flex", gap: 10 }} onClick={e => e.stopPropagation()}>
-                            <button className="btn-ghost" style={{ cursor: "pointer" }} onClick={() => handleEdit(v)}>Edit</button>
-                            <button onClick={() => handleDelete(v.docId)} style={{ background: "none", border: "1px solid #ff6b6b", color: "#ff6b6b", padding: "8px 16px", cursor: "pointer", borderRadius: 2, fontSize: 13 }}>Delete</button>
+                        <div className="adm-row-actions" onClick={e => e.stopPropagation()}>
+                            <button className="btn-ghost" onClick={() => handleEdit(v)}>Edit</button>
+                            <button onClick={() => handleDelete(v.docId)} className="adm-btn-danger">Delete</button>
                         </div>
                     </div>
                 ))}
@@ -378,22 +376,21 @@ export default function AdminVenuesPage({ navigate }) {
     ];
 
     return (
-        <div style={{ minHeight: "100vh", background: "var(--dark)", padding: "120px 40px 40px" }}>
-            <div style={{ display: "flex", alignItems: "center", gap: 20, marginBottom: 32 }}>
-                <button className="back-btn" onClick={handleBack}>← Back to List</button>
-                <button className="back-btn" onClick={() => navigate("admin")}>← Dashboard</button>
+        <div className="adm-page">
+            <div className="adm-crumbs">
+                <button className="adm-back" onClick={handleBack}>← Back to List</button>
             </div>
-            <div className="heading" style={{ fontSize: 32, marginBottom: 32 }}>{editing === "new" ? "New Venue" : "Edit Venue"}</div>
+            <div className="adm-title">{editing === "new" ? "New Venue" : "Edit Venue"}</div>
             <div style={{ display: "grid", gridTemplateColumns: "minmax(0, 640px) minmax(280px, 1fr)", gap: 48, alignItems: "start" }}>
-                <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
+                <div style={{ display: "flex", flexDirection: "column", gap: 18 }}>
                 {fields.map(([key, label]) => (
                     <div key={key}>
-                        <div style={{ fontSize: 12, opacity: 0.5, marginBottom: 6, textTransform: "uppercase" }}>{label}</div>
+                        <div className="adm-label">{label}</div>
                         {key === "bg" || key === "bg1" || key === "courtsImageBg" || key === "clubImageBg" ? (
                             <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
                                 {/* IMAGE UPLOAD */}
-                                <div style={{ padding: 12, background: "rgba(45, 168, 79, 0.1)", border: "1px solid rgba(45, 168, 79, 0.3)", borderRadius: 4 }}>
-                                    <div style={{ fontSize: 12, opacity: 0.7, marginBottom: 8 }}>📸 Upload Background Image</div>
+                                <div className="adm-panel" style={{ padding: 14 }}>
+                                    <div className="adm-label">Background image</div>
                                     <label style={{ display: "inline-block", cursor: "pointer" }}>
                                         <input
                                             type="file"
@@ -427,7 +424,7 @@ export default function AdminVenuesPage({ navigate }) {
 
                                 {/* COLOR PICKER */}
                                 <div>
-                                    <div style={{ fontSize: 12, opacity: 0.7, marginBottom: 8 }}>🎨 Or Select Color</div>
+                                    <div className="adm-label">Or pick a color</div>
                                     <div style={{ display: "flex", gap: 12, alignItems: "center", position: "relative" }}>
                                         <div
                                             onClick={() => setColorPickerOpen(colorPickerOpen === key ? null : key)}
@@ -465,21 +462,21 @@ export default function AdminVenuesPage({ navigate }) {
                                 min="0"
                                 value={form[key] || ""}
                                 onChange={e => handleChange(key, e.target.value === "" ? "" : parseInt(e.target.value))}
-                                style={{ width: "100%", padding: "12px 16px", background: "var(--mid)", border: "1px solid rgba(255,255,255,0.1)", color: "var(--white)", borderRadius: 4 }}
+                                className="adm-input"
                             />
                         ) : (key === "intro" || key.includes("Text") || key.includes("Caption")) ? (
                             <textarea
                                 value={form[key] || ""}
                                 onChange={e => handleChange(key, e.target.value)}
                                 rows={key === "intro" || key.includes("Text") ? 4 : 2}
-                                style={{ width: "100%", padding: "12px 16px", background: "var(--mid)", border: "1px solid rgba(255,255,255,0.1)", color: "var(--white)", borderRadius: 4, resize: "vertical" }}
+                                className="adm-input"
                             />
                         ) : (
                             <>
                                 <input
                                     value={form[key] || ""}
                                     onChange={e => handleChange(key, e.target.value)}
-                                    style={{ width: "100%", padding: "12px 16px", background: "var(--mid)", border: "1px solid rgba(255,255,255,0.1)", color: "var(--white)", borderRadius: 4 }}
+                                    className="adm-input"
                                 />
                                 {key === "mapUrl" && (
                                     <div style={{ marginTop: 8, padding: "10px 14px", background: "rgba(45,168,79,0.06)", border: "1px solid rgba(45,168,79,0.2)", borderRadius: 4 }}>
@@ -492,7 +489,7 @@ export default function AdminVenuesPage({ navigate }) {
                         )}
                     </div>
                 ))}
-                <div style={{ padding: 20, background: "rgba(255,255,255,0.02)", borderRadius: 8 }}>
+                <div className="adm-panel">
                     <div style={{ marginBottom: 16 }}>
                         <div className="tag">Image Upload</div>
                         <div style={{ opacity: 0.7, fontSize: 13, marginBottom: 12 }}>Upload venue cover image</div>
@@ -522,7 +519,7 @@ export default function AdminVenuesPage({ navigate }) {
                         />
                     )}
                 </div>
-                <div style={{ padding: 20, background: "rgba(255,255,255,0.02)", borderRadius: 8 }}>
+                <div className="adm-panel">
                     <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 16 }}>
                         <div>
                             <div className="tag">Venue Features</div>
@@ -556,7 +553,7 @@ export default function AdminVenuesPage({ navigate }) {
                         </div>
                     ))}
                 </div>
-                <div style={{ padding: 20, background: "rgba(255,255,255,0.02)", borderRadius: 8 }}>
+                <div className="adm-panel">
                     <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 16 }}>
                         <div>
                             <div className="tag">Gallery</div>
@@ -638,7 +635,7 @@ export default function AdminVenuesPage({ navigate }) {
                     {saving ? "Saving..." : "Save Venue"}
                 </button>
                 </div>
-                <div style={{ position: "sticky", top: 120 }}>
+                <div style={{ position: "sticky", top: 24 }}>
                     <VenuePreview form={form} />
                 </div>
             </div>

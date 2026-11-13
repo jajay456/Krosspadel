@@ -71,11 +71,7 @@ export default function Nav({ navigate, scrolled, page }) {
     };
   }, [isAdmin]);
 
-  if (isAdmin) return (
-    <nav ref={navRef} className={scrolled ? "scrolled" : ""}>
-      <img src="/image/kross_logo.png" alt="KROSS" onClick={() => go("admin")} style={{ height: 48, cursor: "pointer" }} />
-    </nav>
-  );
+  if (isAdmin) return null;
 
   return (
     <>

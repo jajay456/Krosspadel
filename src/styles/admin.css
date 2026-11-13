@@ -1,0 +1,476 @@
+/* ADMIN — หน้าหลังบ้าน ใช้ตัวอักษรอ่านง่าย ขอบบาง สีเขียวเฉพาะจุดที่ต้องกด */
+
+.adm {
+    --adm-bg: #0b0b0b;
+    --adm-surface: #121212;
+    --adm-surface-2: #181818;
+    --adm-line: rgba(255, 255, 255, 0.07);
+    --adm-line-strong: rgba(255, 255, 255, 0.14);
+    --adm-text-dim: rgba(242, 240, 234, 0.55);
+    --adm-text-faint: rgba(242, 240, 234, 0.35);
+    --adm-danger: #e5484d;
+    --adm-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans Thai", "Sukhumvit Set", sans-serif;
+
+    min-height: 100vh;
+    background: var(--adm-bg);
+    font-family: var(--adm-sans);
+    font-weight: 400;
+    font-size: 14px;
+}
+
+.adm-login {
+    --adm-bg: #0b0b0b;
+    --adm-surface: #121212;
+    --adm-line: rgba(255, 255, 255, 0.07);
+    --adm-line-strong: rgba(255, 255, 255, 0.14);
+    --adm-text-dim: rgba(242, 240, 234, 0.55);
+    --adm-text-faint: rgba(242, 240, 234, 0.35);
+    --adm-danger: #e5484d;
+    --adm-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans Thai", "Sukhumvit Set", sans-serif;
+    font-family: var(--adm-sans);
+    font-weight: 400;
+}
+
+/* ให้ preview ด้านขวาของฟอร์ม (position: sticky) ติดจอได้ในหน้า admin
+   clip ตัดส่วนเกินเหมือน hidden แต่ไม่สร้าง scroll container */
+html:has(.adm),
+html:has(.adm) body {
+    overflow-x: clip;
+}
+
+/* SIDEBAR */
+/* fixed ไม่ใช่ sticky — global.css ตั้ง overflow-x: hidden ที่ html/body ทำให้ sticky ไม่ทำงาน */
+.adm-side {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 232px;
+    height: 100vh;
+    z-index: 10;
+    background: var(--adm-bg);
+    display: flex;
+    flex-direction: column;
+    border-right: 1px solid var(--adm-line);
+    padding: 20px 12px;
+}
+
+.adm-brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 4px 10px 24px;
+    background: none;
+    border: none;
+    color: var(--white);
+    cursor: pointer;
+}
+
+.adm-brand img { height: 26px; }
+
+.adm-brand span {
+    font-family: 'Gotham Narrow', sans-serif;
+    font-weight: 700;
+    font-size: 10px;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--adm-text-faint);
+    padding-left: 10px;
+    border-left: 1px solid var(--adm-line-strong);
+}
+
+.adm-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+}
+
+.adm-nav-group {
+    font-size: 11px;
+    color: var(--adm-text-faint);
+    padding: 18px 10px 6px;
+}
+
+.adm-nav button {
+    text-align: left;
+    background: none;
+    border: none;
+    color: var(--adm-text-dim);
+    font: inherit;
+    padding: 7px 10px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background .12s, color .12s;
+}
+
+.adm-nav button:hover {
+    background: var(--adm-surface-2);
+    color: var(--white);
+}
+
+.adm-nav button.active {
+    background: var(--adm-surface-2);
+    color: var(--white);
+    box-shadow: inset 2px 0 0 var(--green-highlight);
+}
+
+.adm-side-foot {
+    margin-top: auto;
+    padding: 12px 10px 0;
+    border-top: 1px solid var(--adm-line);
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    font-size: 12px;
+}
+
+.adm-site-link {
+    color: var(--adm-text-dim);
+    text-decoration: none;
+}
+
+.adm-site-link:hover { color: var(--white); }
+
+.adm-user {
+    color: var(--adm-text-faint);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.adm-logout {
+    align-self: flex-start;
+    background: none;
+    border: none;
+    padding: 0;
+    color: var(--adm-text-dim);
+    font: inherit;
+    cursor: pointer;
+}
+
+.adm-logout:hover { color: var(--adm-danger); }
+
+/* MAIN */
+.adm-main {
+    min-width: 0;
+    margin-left: 232px;
+}
+
+.adm-page {
+    max-width: 1180px;
+    padding: 36px 40px 80px;
+}
+
+.adm-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 16px;
+    padding-bottom: 20px;
+    margin-bottom: 24px;
+    border-bottom: 1px solid var(--adm-line);
+}
+
+.adm-title {
+    font-family: 'Gotham Narrow', sans-serif;
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 22px;
+    letter-spacing: 1.5px;
+    line-height: 1.1;
+    margin: 0 0 20px;
+}
+
+.adm-head .adm-title { margin: 0; }
+
+.adm-head > button {
+    flex-shrink: 0;
+    width: auto;
+}
+
+.adm-sub {
+    color: var(--adm-text-dim);
+    margin-top: 6px;
+    font-size: 13px;
+}
+
+.adm-crumbs {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 14px;
+}
+
+.adm-back {
+    background: none;
+    border: none;
+    padding: 0;
+    font: inherit;
+    font-size: 13px;
+    color: var(--adm-text-dim);
+    cursor: pointer;
+}
+
+.adm-back:hover { color: var(--white); }
+
+/* BUTTONS — ย่อปุ่มของหน้าเว็บหลักให้พอดีกับหน้าจัดการ */
+.adm .btn-primary,
+.adm .btn-ghost,
+.adm-login .btn-primary {
+    font-family: var(--adm-sans);
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0;
+    text-transform: none;
+    padding: 8px 14px;
+    border-radius: 6px;
+    line-height: 1.3;
+}
+
+.adm .btn-primary:hover,
+.adm-login .btn-primary:hover {
+    transform: none;
+    box-shadow: none;
+}
+
+.adm .btn-ghost {
+    border-color: var(--adm-line-strong);
+}
+
+.adm .btn-ghost:hover {
+    color: var(--white);
+    border-color: rgba(255, 255, 255, 0.3);
+    background: var(--adm-surface-2);
+}
+
+.adm button:disabled {
+    opacity: .5;
+    cursor: default;
+}
+
+.adm-btn-danger {
+    background: none;
+    border: 1px solid transparent;
+    color: var(--adm-danger);
+    font: inherit;
+    font-size: 13px;
+    padding: 8px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.adm-btn-danger:hover {
+    background: rgba(229, 72, 77, 0.1);
+}
+
+/* FORMS */
+.adm-label,
+.adm-login .adm-label {
+    font-size: 12px;
+    color: var(--adm-text-dim);
+    margin-bottom: 6px;
+}
+
+.adm-input {
+    width: 100%;
+    padding: 9px 12px;
+    background: var(--adm-surface);
+    border: 1px solid var(--adm-line-strong);
+    border-radius: 6px;
+    color: var(--white);
+    font: inherit;
+    font-size: 14px;
+    transition: border-color .12s, box-shadow .12s;
+    color-scheme: dark;
+}
+
+textarea.adm-input {
+    resize: vertical;
+    line-height: 1.55;
+}
+
+.adm-input::placeholder { color: var(--adm-text-faint); }
+
+.adm-input:focus {
+    outline: none;
+    border-color: var(--green-highlight);
+    box-shadow: 0 0 0 3px rgba(45, 168, 79, 0.15);
+}
+
+.adm input:not([type="file"]):not([type="checkbox"]):not([type="radio"]):not(.adm-input),
+.adm select,
+.adm textarea:not(.adm-input) {
+    font-family: var(--adm-sans);
+    font-weight: 400;
+    border-radius: 6px;
+}
+
+.adm-panel {
+    padding: 18px;
+    background: var(--adm-surface);
+    border: 1px solid var(--adm-line);
+    border-radius: 8px;
+}
+
+/* ส่วนหัวย่อยในฟอร์ม (เดิมเป็นตัวเขียวเว้นช่องกว้าง) */
+.adm .tag {
+    font-family: var(--adm-sans);
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0;
+    text-transform: none;
+    color: var(--white);
+    opacity: 1;
+}
+
+/* LISTS */
+.adm-list {
+    border: 1px solid var(--adm-line);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.adm-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    padding: 12px 16px;
+    background: var(--adm-bg);
+    border-bottom: 1px solid var(--adm-line);
+    transition: background .12s;
+}
+
+.adm-row:last-child { border-bottom: none; }
+
+.adm-row:hover { background: var(--adm-surface); }
+
+.adm-row-title {
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.adm-row-meta {
+    font-size: 12px;
+    color: var(--adm-text-dim);
+    margin-top: 2px;
+}
+
+.adm-row-actions {
+    display: flex;
+    gap: 4px;
+    opacity: .7;
+    transition: opacity .12s;
+}
+
+.adm-row:hover .adm-row-actions { opacity: 1; }
+
+.adm-hint {
+    font-size: 12px;
+    color: var(--adm-text-faint);
+    margin-bottom: 8px;
+}
+
+/* OVERVIEW */
+.adm-index {
+    border-top: 1px solid var(--adm-line);
+}
+
+.adm-index button {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 180px minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 24px;
+    padding: 16px 4px;
+    background: none;
+    border: none;
+    border-bottom: 1px solid var(--adm-line);
+    color: var(--white);
+    font: inherit;
+    text-align: left;
+    cursor: pointer;
+}
+
+.adm-index-name {
+    font-family: 'Gotham Narrow', sans-serif;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    font-size: 15px;
+}
+
+.adm-index-desc { color: var(--adm-text-dim); }
+
+.adm-index-go {
+    color: var(--adm-text-faint);
+    transition: transform .15s, color .15s;
+}
+
+.adm-index button:hover .adm-index-go {
+    color: var(--green-highlight);
+    transform: translateX(3px);
+}
+
+/* LOGIN */
+.adm-login {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--adm-bg);
+    padding: 24px;
+}
+
+.adm-login-box {
+    width: 100%;
+    max-width: 340px;
+}
+
+.adm-login-box img {
+    height: 34px;
+    margin-bottom: 28px;
+}
+
+.adm-login-box h1 {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 4px;
+}
+
+.adm-login-box p {
+    color: var(--adm-text-dim);
+    font-size: 13px;
+    margin-bottom: 24px;
+}
+
+.adm-error {
+    color: var(--adm-danger);
+    font-size: 13px;
+    margin-bottom: 14px;
+}
+
+@media (max-width: 860px) {
+    .adm-main { margin-left: 0; }
+
+    .adm-side {
+        position: static;
+        width: auto;
+        height: auto;
+        flex-direction: row;
+        align-items: center;
+        gap: 8px;
+        padding: 10px 12px;
+        background: var(--adm-bg);
+        border-right: none;
+        border-bottom: 1px solid var(--adm-line);
+        overflow-x: auto;
+    }
+
+    .adm-brand { padding: 4px 6px; }
+    .adm-brand span, .adm-nav-group, .adm-user, .adm-site-link { display: none; }
+    .adm-nav { flex-direction: row; }
+    .adm-nav button { white-space: nowrap; }
+    .adm-side-foot { margin: 0 0 0 auto; padding: 0; border: none; }
+    .adm-page { padding: 24px 16px 64px; }
+    .adm-index button { grid-template-columns: minmax(0, 1fr) auto; }
+    .adm-index-desc { display: none; }
+}

@@ -14,14 +14,14 @@ const EMPTY_ROW = { label: "", price: "", unit: "", note: "", time: "" };
 const EMPTY = { category: "courtRental", name: "", order: 0, rows: [{ ...EMPTY_ROW }] };
 
 const inputStyle = {
-  width: "100%", padding: "10px 14px",
-  background: "var(--mid)", border: "1px solid rgba(255,255,255,0.1)",
-  color: "var(--white)", borderRadius: 4, fontSize: 13,
+  width: "100%", padding: "9px 12px",
+  background: "var(--adm-surface)", border: "1px solid var(--adm-line-strong)",
+  color: "var(--white)", borderRadius: 6, fontSize: 14,
 };
 
 const smallInput = { ...inputStyle, padding: "8px 12px" };
 
-export default function AdminPricingPage({ navigate }) {
+export default function AdminPricingPage() {
   // เก็บข้อมูลทั้งหมดแยกตาม Category (เช่น { courtRental: [...], coaching: [...] })
   const [dbData, setDbData] = useState({});
   const [loading, setLoading] = useState(true);
@@ -165,11 +165,10 @@ export default function AdminPricingPage({ navigate }) {
   // ----------------------------------------------------
   if (!editing) {
     return (
-      <div style={{ minHeight: "100vh", background: "var(--dark)", padding: "120px 40px 40px" }}>
-        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 40 }}>
+      <div className="adm-page">
+        <div className="adm-head">
           <div>
-            <button className="back-btn" onClick={() => navigate("admin")}>← Dashboard</button>
-            <div className="heading" style={{ fontSize: 32, marginBottom: 0 }}>Pricing Manager</div>
+            <div className="adm-title">Pricing Manager</div>
           </div>
           <button className="btn-primary" onClick={handleNew}>+ Add Item</button>
         </div>
@@ -185,31 +184,25 @@ export default function AdminPricingPage({ navigate }) {
               
               return (
                 <div key={cat.key}>
-                  <div style={{
-                    fontSize: 11, fontWeight: 700, letterSpacing: "2px",
-                    textTransform: "uppercase", opacity: 0.4, marginBottom: 12
-                  }}>{cat.label} (Collection: {cat.key})</div>
+                  <div className="adm-label" style={{ marginBottom: 10 }}>{cat.label}</div>
 
                   {itemsOfCategory.length === 0 ? (
                     <div style={{ opacity: 0.25, fontSize: 13, padding: "16px 0" }}>No items in this collection</div>
                   ) : (
-                    <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+                    <div className="adm-list">
                       {itemsOfCategory.map(item => (
-                        <div key={item.docId} style={{
-                          display: "flex", justifyContent: "space-between", alignItems: "center",
-                          padding: "16px 20px", background: "var(--mid)", borderRadius: 6
-                        }}>
+                        <div key={item.docId} className="adm-row">
                           <div>
-                            <div style={{ fontSize: 15, fontWeight: 600, marginBottom: 4 }}>{item.name}</div>
-                            <div style={{ opacity: 0.4, fontSize: 12 }}>
-                              {item.rows.length} row{item.rows.length !== 1 ? "s" : ""} · ID: {item.docId}
+                            <div className="adm-row-title">{item.name}</div>
+                            <div className="adm-row-meta">
+                              {item.rows.length} row{item.rows.length !== 1 ? "s" : ""}
                             </div>
                           </div>
-                          <div style={{ display: "flex", gap: 10 }}>
+                          <div className="adm-row-actions">
                             <button className="btn-ghost" onClick={() => handleEdit(item)}>Edit</button>
                             <button
                               onClick={() => handleDelete(item.category, item.docId)}
-                              style={{ background: "none", border: "1px solid #ff6b6b", color: "#ff6b6b", padding: "8px 18px", cursor: "pointer", borderRadius: 2, fontSize: 13 }}
+                              className="adm-btn-danger"
                             >Delete</button>
                           </div>
                         </div>
@@ -229,12 +222,11 @@ export default function AdminPricingPage({ navigate }) {
   // หน้าฟอร์ม: แก้ไข/เพิ่ม ข้อมูล
   // ----------------------------------------------------
   return (
-    <div style={{ minHeight: "100vh", background: "var(--dark)", padding: "120px 40px 40px" }}>
-      <div style={{ display: "flex", alignItems: "center", gap: 16, marginBottom: 32 }}>
-        <button className="back-btn" onClick={handleBack}>← Back</button>
-        <button className="back-btn" onClick={() => navigate("admin")}>← Dashboard</button>
+    <div className="adm-page">
+      <div className="adm-crumbs">
+        <button className="adm-back" onClick={handleBack}>← Back</button>
       </div>
-      <div className="heading" style={{ fontSize: 32, marginBottom: 32 }}>
+      <div className="adm-title">
         {editing === "new" ? "New Pricing Item" : "Edit Pricing Item"}
       </div>
 
@@ -245,7 +237,7 @@ export default function AdminPricingPage({ navigate }) {
           <select
             value={form.category}
             onChange={e => handleChange("category", e.target.value)}
-            style={{ ...inputStyle, appearance: "none" }}
+            className="adm-input" style={{ appearance: "none" }}
             disabled={editing !== "new"} // ปิดไม่ให้ย้าย Collection ตอน Edit เพื่อป้องกันบั๊ก ID ซ้ำซ้อน
           >
             {CATEGORIES.map(c => <option key={c.key} value={c.key}>{c.label}</option>)}
@@ -260,7 +252,7 @@ export default function AdminPricingPage({ navigate }) {
           <input
             value={form.name}
             onChange={e => handleChange("name", e.target.value)}
-            style={inputStyle}
+            className="adm-input"
             placeholder="เช่น KROSS Onnut, Premium Coaching"
           />
         </div>
@@ -272,7 +264,7 @@ export default function AdminPricingPage({ navigate }) {
             type="number"
             value={form.order}
             onChange={e => handleChange("order", e.target.value)}
-            style={{ ...inputStyle, width: 120 }}
+            className="adm-input" style={{ width: 120 }}
           />
         </div>
 

@@ -1,42 +1,56 @@
 import { useState } from "react";
 import { auth } from "../../firebase";
 import { signInWithEmailAndPassword } from "firebase/auth";
+import "../../styles/admin.css";
 
 export default function AdminLoginPage({ navigate }) {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
+    const [loading, setLoading] = useState(false);
 
-    const handleLogin = async () => {
+    const handleLogin = async (e) => {
+        e.preventDefault();
+        setLoading(true);
         try {
             await signInWithEmailAndPassword(auth, email, password);
             navigate("admin");
         } catch  {
             setError("Email หรือ Password ไม่ถูกต้อง");
         }
+        setLoading(false);
     };
 
     return (
-        <div style={{ minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center", background: "var(--dark)" }}>
-            <div style={{ width: 360, padding: 40, background: "var(--mid)", borderRadius: 8 }}>
-                <div className="heading" style={{ fontSize: 32, marginBottom: 32 }}>Admin</div>
+        <div className="adm-login">
+            <form className="adm-login-box" onSubmit={handleLogin}>
+                <img src="/image/kross_logo.png" alt="KROSS" />
+                <h1>Sign in</h1>
+                <p>ระบบจัดการเนื้อหาเว็บไซต์ KROSS</p>
+
+                <div className="adm-label">Email</div>
                 <input
-                    placeholder="Email"
+                    className="adm-input"
+                    type="email"
+                    autoComplete="username"
                     value={email}
                     onChange={e => setEmail(e.target.value)}
-                    style={{ width: "100%", marginBottom: 16, padding: "12px 16px", background: "var(--dark)", border: "1px solid rgba(255,255,255,0.1)", color: "var(--white)", borderRadius: 4 }}
+                    style={{ marginBottom: 14 }}
                 />
+                <div className="adm-label">Password</div>
                 <input
+                    className="adm-input"
                     type="password"
-                    placeholder="Password"
+                    autoComplete="current-password"
                     value={password}
                     onChange={e => setPassword(e.target.value)}
-                    onKeyDown={e => e.key === "Enter" && handleLogin()}
-                    style={{ width: "100%", marginBottom: 24, padding: "12px 16px", background: "var(--dark)", border: "1px solid rgba(255,255,255,0.1)", color: "var(--white)", borderRadius: 4 }}
+                    style={{ marginBottom: 20 }}
                 />
-                {error && <div style={{ color: "#ff6b6b", marginBottom: 16, fontSize: 13 }}>{error}</div>}
-                <button className="btn-primary" style={{ width: "100%" }} onClick={handleLogin}>Login</button>
-            </div>
+                {error && <div className="adm-error">{error}</div>}
+                <button type="submit" className="btn-primary" style={{ width: "100%" }} disabled={loading}>
+                    {loading ? "Signing in..." : "Sign in"}
+                </button>
+            </form>
         </div>
     );
 }

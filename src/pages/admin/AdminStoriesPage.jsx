@@ -63,7 +63,7 @@ function StoryPreview({ form }) {
     );
 }
 
-export default function AdminStoriesPage({ navigate }) {
+export default function AdminStoriesPage() {
     const [stories, setStories] = useState([]);
     const [editing, setEditing] = useState(null);
     const [form, setForm] = useState(EMPTY);
@@ -166,27 +166,26 @@ export default function AdminStoriesPage({ navigate }) {
 
     // LIST
     if (!editing) return (
-        <div style={{ minHeight: "100vh", background: "var(--dark)", padding: "120px 40px 40px" }}>
-            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 40 }}>
+        <div className="adm-page">
+            <div className="adm-head">
                 <div>
-                    <button className="back-btn" onClick={() => navigate("admin")}>← Dashboard</button>
-                    <div className="heading" style={{ fontSize: 32, marginBottom: 0 }}>Stories</div>
+                    <div className="adm-title">Stories</div>
                 </div>
                 <button className="btn-primary" onClick={handleNew}>+ Add Story</button>
             </div>
-            <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
+            <div className="adm-list">
                 {stories.map(s => (
-                    <div key={s.docId} style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "20px 24px", background: "var(--mid)", borderRadius: 8 }}>
+                    <div key={s.docId} className="adm-row">
                         <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
                             {s.imageUrl && <img src={s.imageUrl} alt="" style={{ width: 56, height: 40, objectFit: "cover", borderRadius: 3, opacity: .8 }} />}
                             <div>
-                                <div className="venue-name" style={{ fontSize: 18 }}>{s.title}</div>
-                                <div style={{ opacity: 0.5, fontSize: 13 }}>{s.cat ? `${s.cat} · ` : ""}{s.date}</div>
+                                <div className="adm-row-title">{s.title}</div>
+                                <div className="adm-row-meta">{s.cat ? `${s.cat} · ` : ""}{s.date}</div>
                             </div>
                         </div>
-                        <div style={{ display: "flex", gap: 12 }}>
+                        <div className="adm-row-actions">
                             <button className="btn-ghost" onClick={() => handleEdit(s)}>Edit</button>
-                            <button onClick={() => handleDelete(s.docId)} style={{ background: "none", border: "1px solid #ff6b6b", color: "#ff6b6b", padding: "8px 20px", cursor: "pointer", borderRadius: 2 }}>Delete</button>
+                            <button onClick={() => handleDelete(s.docId)} className="adm-btn-danger">Delete</button>
                         </div>
                     </div>
                 ))}
@@ -195,51 +194,48 @@ export default function AdminStoriesPage({ navigate }) {
     );
 
     // FORM
-    const inputStyle = { width: "100%", padding: "12px 16px", background: "var(--mid)", border: "1px solid rgba(255,255,255,0.1)", color: "var(--white)", borderRadius: 4 };
-    const labelStyle = { fontSize: 12, opacity: 0.5, marginBottom: 6, textTransform: "uppercase" };
 
     return (
-        <div style={{ minHeight: "100vh", background: "var(--dark)", padding: "120px 40px 40px" }}>
-            <div style={{ display: "flex", alignItems: "center", gap: 20, marginBottom: 32 }}>
-                <button className="back-btn" onClick={handleBack}>← Back to List</button>
-                <button className="back-btn" onClick={() => navigate("admin")}>← Dashboard</button>
+        <div className="adm-page">
+            <div className="adm-crumbs">
+                <button className="adm-back" onClick={handleBack}>← Back to List</button>
             </div>
-            <div className="heading" style={{ fontSize: 32, marginBottom: 32 }}>{editing === "new" ? "New Story" : "Edit Story"}</div>
+            <div className="adm-title">{editing === "new" ? "New Story" : "Edit Story"}</div>
             <div style={{ display: "grid", gridTemplateColumns: "minmax(0, 560px) minmax(280px, 1fr)", gap: 48, alignItems: "start" }}>
                 <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
                     {/* Title */}
                     <div>
-                        <div style={labelStyle}>Title</div>
-                        <input value={form.title || ""} onChange={e => handleChange("title", e.target.value)} style={inputStyle} />
+                        <div className="adm-label">Title</div>
+                        <input value={form.title || ""} onChange={e => handleChange("title", e.target.value)} className="adm-input" />
                     </div>
                     {/* Author */}
                     <div>
-                        <div style={labelStyle}>Author</div>
-                        <input value={form.author || ""} onChange={e => handleChange("author", e.target.value)} placeholder="e.g. John Smith" style={inputStyle} />
+                        <div className="adm-label">Author</div>
+                        <input value={form.author || ""} onChange={e => handleChange("author", e.target.value)} placeholder="e.g. John Smith" className="adm-input" />
                     </div>
                     {/* Category */}
                     <div>
-                        <div style={labelStyle}>Category (e.g. Community, Tournament)</div>
-                        <input value={form.cat || ""} onChange={e => handleChange("cat", e.target.value)} style={inputStyle} />
+                        <div className="adm-label">Category (e.g. Community, Tournament)</div>
+                        <input value={form.cat || ""} onChange={e => handleChange("cat", e.target.value)} className="adm-input" />
                     </div>
                     {/* Excerpt */}
                     <div>
-                        <div style={labelStyle}>Excerpt (shown on cards & as lead paragraph)</div>
+                        <div className="adm-label">Excerpt (shown on cards & as lead paragraph)</div>
                         <textarea
                             value={form.excerpt || ""}
                             onChange={e => handleChange("excerpt", e.target.value)}
                             rows={3}
-                            style={{ ...inputStyle, resize: "vertical" }}
+                            className="adm-input" style={{ resize: "vertical" }}
                         />
                     </div>
                     {/* Content / Body */}
                     <div>
-                        <div style={labelStyle}>Content (body text — use blank lines between paragraphs)</div>
+                        <div className="adm-label">Content (body text — use blank lines between paragraphs)</div>
                         <textarea
                             value={form.content || ""}
                             onChange={e => handleChange("content", e.target.value)}
                             rows={10}
-                            style={{ ...inputStyle, resize: "vertical", lineHeight: 1.7 }}
+                            className="adm-input" style={{ resize: "vertical", lineHeight: 1.7 }}
                             placeholder={"Write the full story here...\n\nEach blank line becomes a new paragraph."}
                         />
                     </div>
@@ -275,16 +271,16 @@ export default function AdminStoriesPage({ navigate }) {
 
                     {/* Date */}
                     <div>
-                        <div style={{ fontSize: 12, opacity: 0.5, marginBottom: 6, textTransform: "uppercase" }}>Date</div>
+                        <div className="adm-label">Date</div>
                         <input
                             type="date"
                             value={form.date || ""}
                             onChange={e => handleChange("date", e.target.value)}
-                            style={{ width: "100%", padding: "12px 16px", background: "var(--mid)", border: "1px solid rgba(255,255,255,0.1)", color: "var(--white)", borderRadius: 4, colorScheme: "dark" }}
+                            className="adm-input"
                         />
                     </div>
                     {/* Image upload */}
-                    <div style={{ padding: 20, background: "rgba(255,255,255,0.02)", borderRadius: 8 }}>
+                    <div className="adm-panel">
                         <div className="tag" style={{ marginBottom: 8 }}>Cover Image</div>
                         <div style={{ opacity: 0.7, fontSize: 13, marginBottom: 12 }}>Upload story cover image (overrides BG color)</div>
                         <label style={{ display: "inline-block", cursor: "pointer" }}>
@@ -317,7 +313,7 @@ export default function AdminStoriesPage({ navigate }) {
                         )}
                     </div>
                     {/* Gallery */}
-                    <div style={{ padding: 20, background: "rgba(255,255,255,0.02)", borderRadius: 8 }}>
+                    <div className="adm-panel">
                         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 16 }}>
                             <div>
                                 <div className="tag">Gallery</div>
@@ -400,7 +396,7 @@ export default function AdminStoriesPage({ navigate }) {
                         {saving ? "Saving..." : "Save Story"}
                     </button>
                 </div>
-                <div style={{ position: "sticky", top: 120 }}>
+                <div style={{ position: "sticky", top: 24 }}>
                     <StoryPreview form={form} />
                 </div>
             </div>

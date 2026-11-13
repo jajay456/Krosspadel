@@ -30,6 +30,7 @@ import AdminActivitiesPage from "./pages/admin/AdminActivitiesPage";
 import AdminMembershipPage from "./pages/admin/AdminMembershipPage";
 import AdminTeamPage from "./pages/admin/AdminTeamPage";
 import AdminPricingPage from "./pages/admin/AdminPricingPage";
+import AdminLayout from "./components/AdminLayout";
 
 function AppInner() {
   const { user } = useContext(AuthContext);
@@ -109,13 +110,17 @@ function AppInner() {
       {page === "whatsapp" && <ComingSoonPage navigate={navigate} title="WhatsApp" icon="💬" />}
       {page === "krosspark" && <ComingSoonPage navigate={navigate} title="Kross Park" icon="🏟️" />}
       {page === "admin-login" && <AdminLoginPage navigate={navigate} />}
-      {page === "admin" && (user ? <AdminDashboard navigate={navigate} /> : <AdminLoginPage navigate={navigate} />)}
-      {page === "admin-venues" && (user ? <AdminVenuesPage navigate={navigate} /> : <AdminLoginPage navigate={navigate} />)}
-      {page === "admin-stories" && (user ? <AdminStoriesPage navigate={navigate} /> : <AdminLoginPage navigate={navigate} />)}
-      {page === "admin-activities" && (user ? <AdminActivitiesPage navigate={navigate} /> : <AdminLoginPage navigate={navigate} />)}
-      {page === "admin-membership" && (user ? <AdminMembershipPage navigate={navigate} /> : <AdminLoginPage navigate={navigate} />)}
-      {page === "admin-team" && (user ? <AdminTeamPage navigate={navigate} /> : <AdminLoginPage navigate={navigate} />)}
-      {page === "admin-pricing" && (user ? <AdminPricingPage navigate={navigate} /> : <AdminLoginPage navigate={navigate} />)}
+      {page.startsWith("admin") && page !== "admin-login" && (user ? (
+        <AdminLayout page={page} navigate={navigate}>
+          {page === "admin" && <AdminDashboard navigate={navigate} />}
+          {page === "admin-venues" && <AdminVenuesPage navigate={navigate} />}
+          {page === "admin-stories" && <AdminStoriesPage navigate={navigate} />}
+          {page === "admin-activities" && <AdminActivitiesPage navigate={navigate} />}
+          {page === "admin-membership" && <AdminMembershipPage navigate={navigate} />}
+          {page === "admin-team" && <AdminTeamPage navigate={navigate} />}
+          {page === "admin-pricing" && <AdminPricingPage navigate={navigate} />}
+        </AdminLayout>
+      ) : <AdminLoginPage navigate={navigate} />)}
       {venueMatch && <VenueDetailPage venue={venueMatch} navigate={navigate} openBook={openBook} />}
       {page.startsWith("story-") && <StoryDetailPage navigate={navigate} page={page} />}
       {page.startsWith("activity-") && <ActivityDetailPage navigate={navigate} activityId={page.replace("activity-", "")} />}

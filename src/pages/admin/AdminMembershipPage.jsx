@@ -80,7 +80,7 @@ function MembershipPreview({ form }) {
     );
 }
 
-export default function AdminMembershipPage({ navigate }) {
+export default function AdminMembershipPage() {
     const [plans, setPlans] = useState([]);
     const [editing, setEditing] = useState(null);
     const [form, setForm] = useState(EMPTY);
@@ -125,28 +125,27 @@ export default function AdminMembershipPage({ navigate }) {
 
     // LIST
     if (!editing) return (
-        <div style={{ minHeight: "100vh", background: "var(--dark)", padding: "120px 40px 40px" }}>
-            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 40 }}>
+        <div className="adm-page">
+            <div className="adm-head">
                 <div>
-                    <button className="back-btn" onClick={() => navigate("admin")}>← Dashboard</button>
-                    <div className="heading" style={{ fontSize: 32, marginBottom: 0 }}>Membership Plans</div>
+                    <div className="adm-title">Membership Plans</div>
                 </div>
                 <button className="btn-primary" onClick={handleNew}>+ Add Plan</button>
             </div>
-            <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
+            <div className="adm-list">
                 {plans.map(item => (
-                    <div key={item.docId} style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "20px 24px", background: "var(--mid)", borderRadius: 8 }}>
+                    <div key={item.docId} className="adm-row">
                         <div>
                             <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-                                <div className="venue-name" style={{ fontSize: 18 }}>{item.name}</div>
+                                <div className="adm-row-title">{item.name}</div>
                                 {item.featured && <span style={{ fontSize: 8, letterSpacing: "2px", background: "var(--green-highlight)", color: "#fff", padding: "2px 8px", fontWeight: 600 }}>POPULAR</span>}
                                 {item.hidden && <span style={{ fontSize: 8, letterSpacing: "2px", background: "#555", color: "#fff", padding: "2px 8px", fontWeight: 600 }}>HIDDEN</span>}
                             </div>
-                            <div style={{ opacity: 0.5, fontSize: 13 }}>{item.price} · {item.perks?.slice(0, 60)}...</div>
+                            <div className="adm-row-meta">{item.price} · {item.perks?.slice(0, 60)}...</div>
                         </div>
-                        <div style={{ display: "flex", gap: 12 }}>
+                        <div className="adm-row-actions">
                             <button className="btn-ghost" onClick={() => handleEdit(item)}>Edit</button>
-                            <button onClick={() => handleDelete(item.docId)} style={{ background: "none", border: "1px solid #ff6b6b", color: "#ff6b6b", padding: "8px 20px", cursor: "pointer", borderRadius: 2 }}>Delete</button>
+                            <button onClick={() => handleDelete(item.docId)} className="adm-btn-danger">Delete</button>
                         </div>
                     </div>
                 ))}
@@ -156,57 +155,56 @@ export default function AdminMembershipPage({ navigate }) {
 
     // FORM
     return (
-        <div style={{ minHeight: "100vh", background: "var(--dark)", padding: "120px 40px 40px" }}>
-            <div style={{ display: "flex", alignItems: "center", gap: 20, marginBottom: 32 }}>
-                <button className="back-btn" onClick={handleBack}>← Back to List</button>
-                <button className="back-btn" onClick={() => navigate("admin")}>← Dashboard</button>
+        <div className="adm-page">
+            <div className="adm-crumbs">
+                <button className="adm-back" onClick={handleBack}>← Back to List</button>
             </div>
-            <div className="heading" style={{ fontSize: 32, marginBottom: 32 }}>{editing === "new" ? "New Plan" : "Edit Plan"}</div>
+            <div className="adm-title">{editing === "new" ? "New Plan" : "Edit Plan"}</div>
             <div style={{ display: "grid", gridTemplateColumns: "minmax(0, 560px) minmax(280px, 1fr)", gap: 48, alignItems: "start" }}>
                 <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
                     {/* Name */}
                     <div>
-                        <div style={{ fontSize: 12, opacity: 0.5, marginBottom: 6, textTransform: "uppercase" }}>Name</div>
+                        <div className="adm-label">Name</div>
                         <input
                             value={form.name || ""}
                             onChange={e => handleChange("name", e.target.value)}
-                            style={{ width: "100%", padding: "12px 16px", background: "var(--mid)", border: "1px solid rgba(255,255,255,0.1)", color: "var(--white)", borderRadius: 4 }}
+                            className="adm-input"
                         />
                     </div>
                     {/* Price */}
                     <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>
                         <div>
-                            <div style={{ fontSize: 12, opacity: 0.5, marginBottom: 6, textTransform: "uppercase" }}>Package Price (THB)</div>
+                            <div className="adm-label">Package Price (THB)</div>
                             <input
                                 value={form.price || ""}
                                 onChange={e => handleChange("price", e.target.value)}
                                 placeholder="e.g. 9,200"
-                                style={{ width: "100%", padding: "12px 16px", background: "var(--mid)", border: "1px solid rgba(255,255,255,0.1)", color: "var(--white)", borderRadius: 4 }}
+                                className="adm-input"
                             />
                         </div>
                         <div>
-                            <div style={{ fontSize: 12, opacity: 0.5, marginBottom: 6, textTransform: "uppercase" }}>Price Label</div>
+                            <div className="adm-label">Price Label</div>
                             <input
                                 value={form.priceLabel || ""}
                                 onChange={e => handleChange("priceLabel", e.target.value)}
                                 placeholder="e.g. All Kross Clubs"
-                                style={{ width: "100%", padding: "12px 16px", background: "var(--mid)", border: "1px solid rgba(255,255,255,0.1)", color: "var(--white)", borderRadius: 4 }}
+                                className="adm-input"
                             />
                         </div>
                     </div>
                     {/* Validity */}
                     <div>
-                        <div style={{ fontSize: 12, opacity: 0.5, marginBottom: 6, textTransform: "uppercase" }}>Conditions / Validity</div>
+                        <div className="adm-label">Conditions / Validity</div>
                         <input
                             value={form.validity || ""}
                             onChange={e => handleChange("validity", e.target.value)}
                             placeholder="e.g. Valid 3 months, Non-transferable. Use for regular booking."
-                            style={{ width: "100%", padding: "12px 16px", background: "var(--mid)", border: "1px solid rgba(255,255,255,0.1)", color: "var(--white)", borderRadius: 4 }}
+                            className="adm-input"
                         />
                     </div>
                     {/* Perks */}
                     <div>
-                        <div style={{ fontSize: 12, opacity: 0.5, marginBottom: 6, textTransform: "uppercase" }}>Key Perks (bullet list)</div>
+                        <div className="adm-label">Key Perks (bullet list)</div>
                         <div style={{ fontSize: 11, opacity: 0.4, marginBottom: 8 }}>แต่ละบรรทัด = 1 bullet · กด Enter ขึ้นบรรทัดใหม่</div>
                         <textarea
                             value={form.perks || ""}
@@ -266,7 +264,7 @@ export default function AdminMembershipPage({ navigate }) {
                         {saving ? "Saving..." : "Save Plan"}
                     </button>
                 </div>
-                <div style={{ position: "sticky", top: 120 }}>
+                <div style={{ position: "sticky", top: 24 }}>
                     <MembershipPreview form={form} />
                 </div>
             </div>
