@@ -1,5 +1,5 @@
 import Footer from "../components/Footer";
-import { cldImg } from "../utils/cldImg";
+import { imgUrl } from "../utils/imgUrl";
 
 const BRANDS = [
   {
@@ -101,7 +101,7 @@ export default function LifestylePage({ navigate }) {
               {/* Image side */}
               <div style={{
                 order: idx % 2 === 0 ? 0 : 1,
-                background: `url(${cldImg(b.img, 1200)}) center/cover no-repeat, linear-gradient(135deg, var(--green-dark), var(--green-mid))`,
+                background: `url(${imgUrl(b.img, 1200)}) center/cover no-repeat, linear-gradient(135deg, var(--green-dark), var(--green-mid))`,
                 position: "relative",
                 minHeight: 320,
               }}>

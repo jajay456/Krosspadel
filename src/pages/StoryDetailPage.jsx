@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { db } from "../firebase";
 import { doc, getDoc } from "firebase/firestore";
 import Footer from "../components/Footer";
-import { cldImg } from "../utils/cldImg";
+import { imgUrl } from "../utils/imgUrl";
 
 const MAX_VISIBLE = 22;
 // Indices (0-based) that get 2×2 treatment in the bento grid
@@ -38,7 +38,7 @@ function BentoGallery({ gallery, onOpen }) {
             }}
           >
             <img
-              src={cldImg(url, 800)}
+              src={imgUrl(url, 800)}
               alt=""
               style={{
                 width: "100%",
@@ -132,7 +132,7 @@ function Lightbox({ gallery, index, onClose, onNav }) {
 
       {/* Image */}
       <img
-        src={cldImg(gallery[index], 1600)}
+        src={imgUrl(gallery[index], 1600)}
         alt=""
         onClick={(e) => e.stopPropagation()}
         style={{
@@ -215,7 +215,7 @@ export default function StoryDetailPage({ navigate, page }) {
           position: "absolute",
           inset: 0,
           background: story.imageUrl
-            ? `url(${cldImg(story.imageUrl, 1600)}) center/cover no-repeat`
+            ? `url(${imgUrl(story.imageUrl, 1600)}) center/cover no-repeat`
             : (story.bg || "linear-gradient(135deg, var(--green-dark) 0%, var(--green-mid) 100%)")
         }} />
         <div style={{

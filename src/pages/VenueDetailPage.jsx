@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import Footer from "../components/Footer";
-import { cldImg } from "../utils/cldImg";
+import { imgUrl } from "../utils/imgUrl";
 
 export default function VenueDetailPage({ venue, navigate, openBook }) {
   const [geocoded, setGeocoded] = useState(null);
@@ -42,7 +42,7 @@ export default function VenueDetailPage({ venue, navigate, openBook }) {
     <div>
       <div className="venue-detail-hero">
         <div className="venue-detail-hero-bg" style={{
-          background: venue.bg1Image ? `url(${cldImg(venue.bg1Image, 1600)}) center/cover no-repeat` : venue.bg1
+          background: venue.bg1Image ? `url(${imgUrl(venue.bg1Image, 1600)}) center/cover no-repeat` : venue.bg1
         }} />
         <div className="venue-detail-hero-overlay" />
         <div className="venue-detail-content">
@@ -165,7 +165,7 @@ export default function VenueDetailPage({ venue, navigate, openBook }) {
             </div>
           )}
           <div className="venue-img-block"><div className="venue-img-inner" style={{
-            background: venue.courtsImageBgImage && venue.courtsImageBgImage.startsWith('http') ? `url(${cldImg(venue.courtsImageBgImage, 1200)}) center/cover no-repeat` : (venue.courtsImageBg || "var(--mid2)")
+            background: venue.courtsImageBgImage && venue.courtsImageBgImage.startsWith('http') ? `url(${imgUrl(venue.courtsImageBgImage, 1200)}) center/cover no-repeat` : (venue.courtsImageBg || "var(--mid2)")
           }} /></div>
           <div className="venue-img-caption">{courtsImageCaption}</div>
           <div className="venue-section-heading">The Courts</div>
@@ -180,7 +180,7 @@ export default function VenueDetailPage({ venue, navigate, openBook }) {
             ))}
           </div>
           <div className="venue-img-block"><div className="venue-img-inner" style={{
-            background: venue.clubImageBgImage && venue.clubImageBgImage.startsWith('http') ? `url(${cldImg(venue.clubImageBgImage, 1200)}) center/cover no-repeat` : (venue.clubImageBg || "var(--mid2)")
+            background: venue.clubImageBgImage && venue.clubImageBgImage.startsWith('http') ? `url(${imgUrl(venue.clubImageBgImage, 1200)}) center/cover no-repeat` : (venue.clubImageBg || "var(--mid2)")
           }} /></div>
           <div className="venue-img-caption">{clubImageCaption}</div>
           <div className="venue-section-heading">The Club</div>
@@ -191,7 +191,7 @@ export default function VenueDetailPage({ venue, navigate, openBook }) {
               <div className="venue-section-heading">Gallery</div>
               <div className="venue-gallery-strip" onWheel={(e) => { e.preventDefault(); e.currentTarget.scrollLeft += e.deltaY; }}>
                 {(venue.gallery || []).map((url, i) => (
-                  <img key={i} src={cldImg(url, 800)} alt={`${venue.name} ${i + 1}`} className="venue-gallery-img" />
+                  <img key={i} src={imgUrl(url, 800)} alt={`${venue.name} ${i + 1}`} className="venue-gallery-img" />
                 ))}
               </div>
             </div>

@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import { VenueContext } from "../context/VenueContext";
 import Footer from "../components/Footer";
-import { cldImg } from "../utils/cldImg";
+import { imgUrl } from "../utils/imgUrl";
 export default function VenuesPage({ navigate, openBook }) {
   const { venues } = useContext(VenueContext);
 
@@ -104,7 +104,7 @@ export default function VenuesPage({ navigate, openBook }) {
                 gridColumn: cell.col,
                 gridRow: cell.row,
 
-                backgroundImage: `url('${cldImg(cell.bg, 1000)}')`,
+                backgroundImage: `url('${imgUrl(cell.bg, 1000)}')`,
                 backgroundSize: "cover",
                 backgroundPosition: cell.position ?? "center",
                 backgroundRepeat: "no-repeat",
@@ -176,7 +176,7 @@ export default function VenuesPage({ navigate, openBook }) {
               return (
                 <div className="venue-card" key={v.id} onClick={() => navigate("venue-" + v.id)}>
                   <div className="venue-bg-div" style={{
-                    background: v.bgImage ? `url(${cldImg(v.bgImage, 800)}) center/cover no-repeat` : v.bg
+                    background: v.bgImage ? `url(${imgUrl(v.bgImage, 800)}) center/cover no-repeat` : v.bg
                   }} />
                   <div className="venue-card-inner">
                     <div className="venue-overlay" />

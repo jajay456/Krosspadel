@@ -2,7 +2,7 @@ import { useState, useEffect, useContext, useRef } from "react";
 import { db } from "../../firebase";
 import { collection, getDocs, addDoc, updateDoc, deleteDoc, doc } from "firebase/firestore";
 import { VenueContext } from "../../context/VenueContext";
-import { uploadImage } from "../../cloudinaryClient";
+import { uploadImage } from "../../imagekitClient";
 import { ChromePicker } from "react-color";
 
 const EMPTY = {

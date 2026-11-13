@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { db } from "../../firebase";
 import { collection, getDocs, addDoc, updateDoc, deleteDoc, doc } from "firebase/firestore";
-import { uploadImage } from "../../cloudinaryClient";
+import { uploadImage } from "../../imagekitClient";
 import { formatDate } from "../../utils/venueUtils";
 
 const EMPTY = { num: "", name: "", text: "", imageUrl: "", date: "", time: "", club: "", level: "", url: "" };

@@ -1,5 +1,5 @@
 import Footer from "../components/Footer";
-import { cldImg } from "../utils/cldImg";
+import { imgUrl } from "../utils/imgUrl";
 
 const WHY_ITEMS = [
   { num: "01", title: "Premium Audience", desc: "Connect with a highly engaged community of professionals, entrepreneurs, executives, expatriates, and active lifestyle consumers across Bangkok’s most desirable districts. Our audience values premium experiences, wellness, sport, and community." },
@@ -140,7 +140,7 @@ export default function BrandsCollabsPage({ navigate }) {
                 gap: 10,
               }}>
                 <img
-                  src={cldImg(b.image, 400)}
+                  src={imgUrl(b.image, 400)}
                   alt={b.name}
                   style={{
                     maxWidth: "240px",

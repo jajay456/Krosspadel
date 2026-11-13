@@ -3,7 +3,7 @@ import { db } from "../firebase";
 import { collection, getDocs } from "firebase/firestore";
 
 import Footer from "../components/Footer";
-import { cldImg } from "../utils/cldImg";
+import { imgUrl } from "../utils/imgUrl";
 
 export default function AboutPage({ navigate }) {
     const team = [
@@ -194,7 +194,7 @@ export default function AboutPage({ navigate }) {
                     >
                         {member.image ? (
                         <img
-                            src={cldImg(member.image, 600)}
+                            src={imgUrl(member.image, 600)}
                             alt={member.name}
                             style={{
                             width: 120,

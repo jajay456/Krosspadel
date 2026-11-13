@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { db } from "../firebase";
 import { collection, getDocs } from "firebase/firestore";
 import Footer from "../components/Footer";
-import { cldImg } from "../utils/cldImg";
+import { imgUrl } from "../utils/imgUrl";
 
 const PRICE_TABS = [
   { key: "court_rental", label: "Court Rental" },
@@ -55,7 +55,7 @@ export default function MembershipPage({ navigate, notify, openBook }) {
       {/* HERO */}
       <section id="hero" style={{ padding: 0 }}>
           <div className="hero-video-wrap" style={{
-          backgroundImage: ` linear-gradient(rgba(0, 0, 0, 0.1),rgba(0, 0, 0, 0.1)),url('${cldImg("https://res.cloudinary.com/vtjrp9sy/image/upload/v1783336186/DSC09854_e17j2p.jpg", 1920)}')`,
+          backgroundImage: ` linear-gradient(rgba(0, 0, 0, 0.1),rgba(0, 0, 0, 0.1)),url('${imgUrl("https://res.cloudinary.com/vtjrp9sy/image/upload/v1783336186/DSC09854_e17j2p.jpg", 1920)}')`,
           backgroundSize: "cover",
           backgroundPosition: "center",
           maskImage: "linear-gradient(to bottom, black 80%, transparent 100%)",

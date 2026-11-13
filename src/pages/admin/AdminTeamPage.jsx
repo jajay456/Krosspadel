@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { db } from "../../firebase";
 import { collection, getDocs, addDoc, updateDoc, deleteDoc, doc } from "firebase/firestore";
-import { uploadImage } from "../../cloudinaryClient";
+import { uploadImage } from "../../imagekitClient";
 
 const EMPTY = { name: "", role: "", bio: "", imageUrl: "", displayOrder: 0 };
 
