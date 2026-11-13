@@ -28,6 +28,7 @@
 
 html,
 body {
+    -webkit-tap-highlight-color: transparent; /* ใช้เอฟเฟกต์กดจาก utils/pressFeedback.js แทนกรอบสีเทาของมือถือ */
     width: 100%;
     min-height: 100%;
     overflow-x: hidden
@@ -57,23 +58,37 @@ nav {
     align-items: center;
     gap: 16px;
     overflow: hidden;
-    padding: 0 clamp(20px, 4vw, 40px);
+    padding: 0 clamp(20px, 3.5vw, 48px);
     height: 84px;
     background: rgba(8, 8, 8, 0);
     backdrop-filter: blur(0px);
     border-bottom: 1px solid transparent;
-    transition: background .4s, backdrop-filter .4s, border-color .4s;
+    transition: height .4s cubic-bezier(.2, .7, .2, 1), background .4s, backdrop-filter .4s, border-color .4s;
+}
+
+/* เงาไล่สีด้านบน ให้เมนูอ่านออกตอนอยู่บนวิดีโอ/รูป hero */
+nav::before {
+    content: "";
+    position: absolute;
+    inset: 0; /* nav มี overflow: hidden — ต้องจางหมดภายในกรอบ ไม่งั้นเห็นขอบ */
+    z-index: -1;
+    background: linear-gradient(to bottom, rgba(0, 0, 0, .5) 0%, rgba(0, 0, 0, .22) 55%, rgba(0, 0, 0, 0) 100%);
+    pointer-events: none;
+    transition: opacity .4s;
 }
 
 nav.scrolled {
-    background: rgba(8, 8, 8, 0.92);
-    backdrop-filter: blur(20px);
+    height: 68px;
+    background: rgba(8, 8, 8, 0.86);
+    backdrop-filter: blur(18px) saturate(1.2);
     border-bottom-color: var(--border);
 }
 
+nav.scrolled::before { opacity: 0; }
+
 .nav-links {
     display: flex;
-    gap: 20px;
+    gap: clamp(18px, 2vw, 30px);
     align-items: center;
     min-width: 0;
     justify-content: flex-start;
@@ -81,22 +96,49 @@ nav.scrolled {
 
 .nav-links a,
 .nav-right a {
-    font-size: 13.5px;
-    letter-spacing: 3px;
+    position: relative;
+    padding: 8px 0;
+    font-size: 11.5px;
+    letter-spacing: 2.4px;
+    margin-right: -2.4px; /* ตัด letter-spacing ตัวสุดท้าย ให้ระยะห่างระหว่างเมนูเท่ากันจริง */
     text-transform: uppercase;
     color: var(--white);
     text-decoration: none;
-    opacity: .65;
-    transition: opacity .2s, color .2s;
+    opacity: .78;
+    transition: opacity .25s;
     cursor: pointer;
     white-space: nowrap;
     flex-shrink: 0;
 }
 
+/* เส้นใต้ลากจากซ้ายตอน hover / ค้างไว้ที่หน้าปัจจุบัน */
+.nav-links a::after,
+.nav-right a::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 2.4px;
+    bottom: 2px;
+    height: 1px;
+    background: var(--green-highlight);
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform .35s cubic-bezier(.2, .7, .2, 1);
+}
+
 .nav-links a:hover,
-.nav-right a:hover {
+.nav-right a:hover,
+.nav-links a.active,
+.nav-right a.active {
     opacity: 1;
-    color: var(--green-highlight)
+}
+
+.nav-links a:hover::after,
+.nav-right a:hover::after,
+.nav-links a.active::after,
+.nav-right a.active::after {
+    transform: scaleX(1);
+    transform-origin: left;
 }
 
 .nav-logo {
@@ -112,7 +154,7 @@ nav.scrolled {
 
 .nav-right {
     display: flex;
-    gap: 16px;
+    gap: clamp(18px, 2vw, 30px);
     align-items: center;
     min-width: 0;
     justify-content: flex-end;
@@ -122,13 +164,16 @@ nav.scrolled {
     grid-column: 2;
     justify-self: center;
     display: block;
-    height: 48px;
+    height: 40px;
     width: auto;
     object-fit: contain;
     cursor: pointer;
     flex-shrink: 0;
     pointer-events: auto;
+    transition: height .4s cubic-bezier(.2, .7, .2, 1);
 }
+
+nav.scrolled .nav-logo-img { height: 32px; }
 
 /* Off-screen sizer: mirrors the full menus so JS can measure their natural width
    even while the visible links are hidden. Never affects layout or interaction. */
@@ -2140,3 +2185,69 @@ nav.nav-compact .nav-right {
     }
 }
 .price-tabs::-webkit-scrollbar { display: none; }
+
+/* SCROLL REVEAL — ใช้คู่กับ hooks/useReveal.js
+   ใส่ .reveal ที่ตัวห่อเท่านั้น (ถ้าตัว element มี opacity ของตัวเอง จะชนกัน) */
+.reveal {
+    opacity: 0;
+    transform: translateY(28px);
+    transition: opacity .8s cubic-bezier(.2, .7, .2, 1), transform .8s cubic-bezier(.2, .7, .2, 1);
+    transition-delay: var(--d, 0ms);
+}
+
+.reveal.in {
+    opacity: 1;
+    transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .reveal {
+        opacity: 1;
+        transform: none;
+        transition: none;
+    }
+}
+
+/* VENUES PAGE — stats */
+.venue-stats {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+}
+
+.venue-stat {
+    padding: 40px 24px;
+    text-align: center;
+    color: var(--green-highlight);
+    border-right: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.venue-stat:last-child { border-right: none; }
+
+.venue-stat svg { transition: transform .4s cubic-bezier(.2, .7, .2, 1); }
+.venue-stat:hover svg { transform: translateY(-4px); }
+
+@media (max-width: 1024px) {
+    .venue-stats { grid-template-columns: repeat(3, 1fr); }
+    .venue-stat { border-bottom: 1px solid rgba(255, 255, 255, 0.1); }
+    .venue-stat:nth-child(3n) { border-right: none; }
+    .venue-stat:nth-child(n+4) { border-bottom: none; }
+}
+
+@media (max-width: 600px) {
+    .venue-stats { grid-template-columns: repeat(2, 1fr); }
+    .venue-stat { padding: 28px 12px; border-right: 1px solid rgba(255, 255, 255, 0.1); border-bottom: 1px solid rgba(255, 255, 255, 0.1); }
+    .venue-stat:nth-child(3n) { border-right: 1px solid rgba(255, 255, 255, 0.1); }
+    .venue-stat:nth-child(2n) { border-right: none; }
+    .venue-stat:nth-child(n+5) { border-bottom: none; }
+
+    /* หน้า Venues: เรียงการ์ดลงล่างแทนสไลด์ข้าง */
+    .venues-grid.venues-grid--stack {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 12px;
+        overflow: visible;
+    }
+    .venues-grid--stack .venue-card { aspect-ratio: 4/5; }
+    /* ไม่มี hover บนมือถือ — แสดงปุ่ม View Venue ตลอด */
+    .venues-grid--stack .venue-cta { opacity: 1; transform: none; }
+}

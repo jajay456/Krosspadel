@@ -29,6 +29,13 @@ export default function Nav({ navigate, scrolled, page }) {
 
   const isAdmin = page && page.startsWith("admin");
   const go = (p) => { navigate(p); setMenuOpen(false); };
+  // หน้าย่อย (venue-xxx, story-xxx, partner-xxx) ให้ไฮไลต์เมนูแม่
+  const section = page?.startsWith("venue-") ? "venues"
+    : page?.startsWith("story-") ? "stories"
+    : page?.startsWith("activity-") ? "activities"
+    : page?.startsWith("partner") ? "partner"
+    : page;
+  const cls = (p, extra = "") => [extra, section === p ? "active" : ""].filter(Boolean).join(" ") || undefined;
 
   // Measure real widths and decide whether the side menus would collide with the
   // centered logo. The hidden "sizer" always holds the full-width menus, so we can
@@ -77,13 +84,13 @@ export default function Nav({ navigate, scrolled, page }) {
     <>
       <nav ref={navRef} className={`${scrolled ? "scrolled" : ""}${compact ? " nav-compact" : ""}`}>
         <div className="nav-links">
-          {LEFT_LINKS.map(l => <a key={l.p} onClick={() => go(l.p)}>{l.label}</a>)}
+          {LEFT_LINKS.map(l => <a key={l.p} className={cls(l.p)} onClick={() => go(l.p)}>{l.label}</a>)}
         </div>
         <img ref={logoRef} className="nav-logo-img" src="/image/kross_logo.png" alt="KROSS" onClick={() => go("home")} />
         <div className="nav-right">
           {RIGHT_LINKS.map(l => l.href
             ? <a key={l.p} className="desktop-only" href={l.href} target="_blank" rel="noopener noreferrer">{l.label}</a>
-            : <a key={l.p} className="desktop-only" onClick={() => go(l.p)}>{l.label}</a>)}
+            : <a key={l.p} className={cls(l.p, "desktop-only")} onClick={() => go(l.p)}>{l.label}</a>)}
           <button className={`hamburger${menuOpen ? " open" : ""}`} onClick={() => setMenuOpen(o => !o)} aria-label="Menu">
             <span /><span /><span />
           </button>
